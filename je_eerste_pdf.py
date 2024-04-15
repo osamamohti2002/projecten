@@ -51,6 +51,19 @@ pdf.cell(120, 10, '0628799719', ln=True)
 pdf.cell(120, 10, 'lithejnaid27@gmail.com', ln=True)
 
 
+# Infomatie over de eigenaar
+pdf.ln(-50)
+pdf.set_font('Arial', 'B', 14)
+pdf.cell(180, -113, 'OM Diensten', ln=True, align='R')
+pdf.set_font('Arial', '', 14)
+pdf.cell(180, 135, 'Osama Mohti', ln=1, align='R')
+pdf.cell(180, -115, 'Lindelaan 56', ln=1, align='R')
+pdf.cell(180, 135, '2651 TL, Berkel en Rodenrijd', ln=1, align='R')
+pdf.cell(180, -115, '0618383611', ln=1, align='R')
+pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
+
+
+
 pdf.ln(110)
 pdf.set_font('helvetica', 'I', 10)
 pdf.cell(0, 10, 'Wij bedanken u voor uw vertrouwen in ons', align='C')
