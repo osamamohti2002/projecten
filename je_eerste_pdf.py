@@ -11,6 +11,11 @@ pdf = FPDF('P', 'mm', 'A4')
 pdf.add_page()
 
 
+# Add background color for the top half of the page
+pdf.set_fill_color(173, 216, 230)
+pdf.rect(0, 0, pdf.w, pdf.h / 2, 'F')
+
+
 # Specify font
 pdf.set_font('helvetica', '', 16)
 
@@ -18,12 +23,10 @@ pdf.set_font('helvetica', '', 16)
 # Add text
 # w = width
 # h = height
-# txt = yout text
+# txt = your text
 # ln (0 False; 1 True - move cursor down to next line)
 # border ()
-
-
-# FActuur, Datum, dag & maand
+# Factuur, Datum, dag & maand
 pdf.set_font('Arial', 'B', 20)
 pdf.cell(120, 10, 'FACTUUR', ln=True)
 pdf.ln(10)
@@ -40,7 +43,8 @@ pdf.set_font('Arial', '', 16)
 pdf.cell(80, 50, '15-04-2024', ln=True)
 
 
-# Infomatie over de klant
+# Information about the customer
+pdf.ln(-10)
 pdf.set_font('Arial', 'B', 14)
 pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
 pdf.set_font('Arial', '', 16)
@@ -51,10 +55,36 @@ pdf.cell(120, 10, '0628799719', ln=True)
 pdf.cell(120, 10, 'lithejnaid27@gmail.com', ln=True)
 
 
+# Information about the owner
+pdf.ln(-50)
+pdf.set_font('Arial', 'B', 14)
+pdf.cell(180, -113, 'OM Diensten', ln=True, align='R')
+pdf.set_font('Arial', '', 14)
+pdf.cell(180, 135, 'Osama Mohti', ln=1, align='R')
+pdf.cell(180, -115, 'Lindelaan 56', ln=1, align='R')
+pdf.cell(180, 135, '2651 TL, Berkel en Rodenrijd', ln=1, align='R')
+pdf.cell(180, -115, '0618383611', ln=1, align='R')
+pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
+
+
+TABLE_DATA = (
+    ("AANTAL", "OMSCHRIJVING", "PRIJS PER EENHEID", "REGELTOTAAL"),
+    ("5", "MOUSE", "$8,99", "$44,95"),
+    ("5", "KEYBORD", "$17,99", "$53,97")
+)
+
+# Table without background color
+pdf.set_font('Arial', '', 12)
+with pdf.table() as table:
+    for data_row in TABLE_DATA:
+        row = table.row()
+        for datum in data_row:
+            row.cell(datum)
+
+
 pdf.ln(110)
 pdf.set_font('helvetica', 'I', 10)
 pdf.cell(0, 10, 'Wij bedanken u voor uw vertrouwen in ons', align='C')
 
 
 pdf.output('pdf_testzelf.pdf')
-
