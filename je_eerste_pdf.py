@@ -11,6 +11,11 @@ pdf = FPDF('P', 'mm', 'A4')
 pdf.add_page()
 
 
+# Aad achtergrond color 
+pdf.set_fill_color(173, 216, 230)
+pdf.rect(0, 0, pdf.w, pdf.h / 2, 'F')
+
+
 # Specify font
 pdf.set_font('helvetica', '', 16)
 
@@ -21,8 +26,6 @@ pdf.set_font('helvetica', '', 16)
 # txt = yout text
 # ln (0 False; 1 True - move cursor down to next line)
 # border ()
-
-
 # FActuur, Datum, dag & maand
 pdf.set_font('Arial', 'B', 20)
 pdf.cell(120, 10, 'FACTUUR', ln=True)
@@ -41,6 +44,7 @@ pdf.cell(80, 50, '15-04-2024', ln=True)
 
 
 # Infomatie over de klant
+pdf.ln(-10)
 pdf.set_font('Arial', 'B', 14)
 pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
 pdf.set_font('Arial', '', 16)
@@ -71,3 +75,5 @@ pdf.cell(0, 10, 'Wij bedanken u voor uw vertrouwen in ons', align='C')
 
 pdf.output('pdf_testzelf.pdf')
 
+
+    
