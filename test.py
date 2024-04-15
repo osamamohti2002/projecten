@@ -1,39 +1,45 @@
 from fpdf import FPDF
-import csv
-from fpdf.fonts import FontFace
-from fpdf.enums import TableCellFillMode
-with open("countries.txt", encoding="utf8") as csv_file:
-    data = list(csv.reader(csv_file, delimiter=","))
 
+class PDF(FPDF):
+    def header(self):
+        self.set_font('Arial', 'B', 12)
+        self.cell(0, 10, 'Mijn Tabel zonder Randen', 0, 1, 'C')
 
-pdf = FPDF()
+    def footer(self):
+        self.set_y(-15)
+        self.set_font('Arial', 'I', 8)
+        self.cell(0, 10, f'Pagina {self.page_no()}', 0, 0, 'C')
 
+    def chapter_title(self, title):
+        self.set_font('Arial', 'B', 12)
+        self.cell(0, 10, title, 0, 1, 'L')
+        self.ln(4)
 
+    def chapter_body(self, body):
+        self.set_font('Arial', '', 12)
+        self.multi_cell(0, 10, body)
+        self.ln()
+
+    def add_table(self, header, data):
+        # Header
+        for col in header:
+            self.cell(40, 7, col, 0, 0, 'C')
+        self.ln()
+        # Data
+        for row in data:
+            for col in row:
+                self.cell(40, 6, str(col), 0, 0, 'C')
+            self.ln()
+
+pdf = PDF()
 pdf.add_page()
-with pdf.table() as table:
-    for data_row in data:
-        row = table.row()
-        for datum in data_row:
-            row.cell(datum)
-
-# Styled table:
-pdf.add_page()
-pdf.set_draw_color(255, 0, 0)
-pdf.set_line_width(0.3)
-headings_style = FontFace(emphasis="BOLD", color=255, fill_color=(255, 100, 0))
-with pdf.table(
-    borders_layout="NO_HORIZONTAL_LINES",
-    cell_fill_color=(224, 235, 255),
-    cell_fill_mode=TableCellFillMode.ROWS,
-    col_widths=(42, 39, 35, 42),
-    headings_style=headings_style,
-    line_height=6,
-    text_align=("LEFT", "CENTER", "RIGHT", "RIGHT"),
-    width=160,
-) as table:
-    for data_row in data:
-        row = table.row()
-        for datum in data_row:
-            row.cell(datum)
-
-pdf.output("tuto5.pdf")
+pdf.chapter_title('Voorbeeld van een Tabel zonder Randen')
+pdf.chapter_body('Dit is een voorbeeld van een tabel zonder randen.')
+header = ['Naam', 'Leeftijd', 'Stad']
+data = [
+    ['John Doe', 30, 'New York'],
+    ['Jane Smith', 25, 'Los Angeles'],
+    ['Bob Johnson', 40, 'Chicago']
+]
+pdf.add_table(header, data)
+pdf.output('tabel_zonder_randen.pdf')

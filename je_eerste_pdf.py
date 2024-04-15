@@ -84,11 +84,10 @@ TABLE_DATA = (
 
 # create table
 pdf.set_font('Arial', '', 12)
-with pdf.table() as table:
-    for data_row in TABLE_DATA:
-        row = table.row()
-        for datum in data_row:
-            row.cell(datum)
+for data_row in TABLE_DATA:
+    for datum in data_row:
+        pdf.cell(50, 10, datum, border=0)
+    pdf.ln()
 
 
 
