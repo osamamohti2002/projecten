@@ -1,7 +1,5 @@
 from fpdf import FPDF
-
-# create FPDF object
-
+import json
 
 
 def generate_invoices(data):
@@ -29,27 +27,27 @@ def generate_invoices(data):
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(0, 10, 'FACTUURNUMMER', ln=1, align='L')
     pdf.set_font('Arial', '', 11)
-    pdf.cell(0, 10, '20240415', ln=1, align='L')
+    pdf.cell(0, 10, data["order"]["ordernummer"], ln=1, align='L')
     pdf.ln(-15)
 
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(80, 50, 'Datum', ln=True)
     pdf.ln(-40)
     pdf.set_font('Arial', '', 12)
-    pdf.cell(80, 50, '15-04-2024', ln=True)
+    pdf.cell(80, 50, data["order"]["orderdatum"], ln=True)
 
 
     # Infomatie over de klant
-    pdf.ln(-10)
+    pdf.ln(40)
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
     pdf.set_font('Arial', '', 11)
-    pdf.cell(120, 5, 'Lithe Jnaid', ln=True)
-    pdf.cell(120, 5, 'Waalstraat 21', ln=True)
-    pdf.cell(120, 5, '2991 AL, Barendrecht', ln=True)
-    pdf.cell(120, 5, '0628799719', ln=True)
-    pdf.cell(120, 5, 'lithejnaid27@gmail.com', ln=True)
-    pdf.cell(120, 5, 'Betaaltermijn 30 dagen', ln=True)
+    pdf.cell(120, 5, data["order"]["klant"]["naam"], ln=True)
+    pdf.cell(120, 5, data["order"]["klant"]["adres"], ln=True)
+    pdf.cell(120, 5, data["order"]["klant"]["postcode"], ln=True)
+    pdf.cell(120, 5, data["order"]["klant"]["stad"], ln=True)
+    pdf.cell(120, 5, f"KVK-nummer: {data["order"]["klant"]["KVK-nummer"]}", ln=True)
+    pdf.cell(120, 5, f"Betaaltermijn {data["order"]["betaaltermijn"]}", ln=True)
 
 
     # Infomatie over de eigenaar
@@ -63,38 +61,50 @@ def generate_invoices(data):
     pdf.cell(180, -120, '0618383611', ln=1, align='R')
     pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
 
+
+    
+
+
+
+
+
+
+    # ----------------------------------------------------------------
+    pdf.ln(25)
     pdf.set_fill_color(255, 255, 255)
 
-
-
-
-    # information about products
-    TABLE_DATA = (
-        ("AANTAL", "OMSCHRIJVING", "PRIJS PER EENHEID", "REGELTOTAAL"),
-        ("5", "MOUSE", "$8,99", "$44,95")
-
-    )
-
-
-    # create table
+    # Information about products
     pdf.set_font('Arial', '', 12)
     pdf.ln(10)
-    for data_row in TABLE_DATA:
-        for data in data_row:
-            pdf.cell(50, 15, data, border=0)
+    pdf.cell(50, 15, 'AANTAL', border=0)
+    pdf.cell(50, 15, 'OMSCHRIJVING', border=0)
+    pdf.cell(50, 15, 'PRIJS PER EENHEID', border=0)
+    pdf.cell(50, 15, 'REGELTOTAAL', border=0)
+    pdf.ln(7)
+
+    # Iterate over products
+    for product in data["order"]["producten"]:
+        pdf.cell(50, 15, str(product["aantal"]), border=0)
+        pdf.cell(50, 15, product["productnaam"], border=0)
+        pdf.cell(50, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
+        pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
         pdf.ln(7)
 
     pdf.ln(10)
 
+    # Create table to check out
+    # subtotal = sum(product["prijs_per_stuk_excl_btw"])
+    # btw = subtotal / 100 * 21
+    # total = (subtotal + btw)
 
-    # create table to chek out
+
     total_bedrag = [
-        {'subtotal': '0'},
+        {'subtotal': 'subtotal'},
         {'BTW': '0'},
         {'total': '0'}
     ]
 
-    pdf.set_font('Arial', '',12)
+    pdf.set_font('Arial', '', 12)
     for data_row in total_bedrag:
         for datum, value in data_row.items():
             pdf.cell(140, 3, str(datum), border=0, align='R')
@@ -102,12 +112,7 @@ def generate_invoices(data):
 
         pdf.ln()
 
-
-
-
-
-
-    # footer
+    # Footer
     pdf.set_y(-15)
     pdf.set_font('Arial', '', 12)
     footer_text = """
@@ -120,9 +125,9 @@ def generate_invoices(data):
             """ 
     pdf.multi_cell(0, 5, footer_text, 0, 'L')
 
-    # pdf.ln(110)
-    # pdf.set_font('helvetica', 'I', 10)
-    # pdf.cell(0, 10, 'Wij bedanken u voor uw vertrouwen in ons', align='C')
+    pdf.output('Factuur_json1.pdf')
 
+with open('test_set_softwareleverancier/2024-391.json') as json_file:
+    factuur_data = json.load(json_file)
 
-    pdf.output('pdf_testzelf.pdf')
+generate_invoices(factuur_data)
