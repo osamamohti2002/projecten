@@ -1,51 +1,24 @@
-# from fpdf import FPDF
-
-# class PDF(FPDF):
-#     def header(self):
-#         self.set_font('Arial', 'B', 12)
-#         self.cell(0, 10, 'Mijn Tabel zonder Randen', 0, 1, 'C')
-
-#     def footer(self):
-#         self.set_y(-15)
-#         self.set_font('Arial', 'I', 8)
-#         self.cell(0, 10, f'Pagina {self.page_no()}', 0, 0, 'C')
-
-#     def chapter_title(self, title):
-#         self.set_font('Arial', 'B', 12)
-#         self.cell(0, 10, title, 0, 1, 'L')
-#         self.ln(4)
-
-#     def chapter_body(self, body):
-#         self.set_font('Arial', '', 12)
-#         self.multi_cell(0, 10, body)
-#         self.ln()
-
-#     def add_table(self, header, data):
-#         # Header
-#         for col in header:
-#             self.cell(40, 7, col, 0, 0, 'C')
-#         self.ln()
-#         # Data
-#         for row in data:
-#             for col in row:
-#                 self.cell(40, 6, str(col), 0, 0, 'C')
-#             self.ln()
-
-# pdf = PDF()
-# pdf.add_page()
-# pdf.chapter_title('Voorbeeld van een Tabel zonder Randen')
-# pdf.chapter_body('Dit is een voorbeeld van een tabel zonder randen.')
-# header = ['Naam', 'Leeftijd', 'Stad']
-# data = [
-#     ['John Doe', 30, 'New York'],
-#     ['Jane Smith', 25, 'Los Angeles'],
-#     ['Bob Johnson', 40, 'Chicago']
-# ]
-# pdf.add_table(header, data)
-# pdf.output('tabel_zonder_randen.pdf')
+import os
 import json
 
-with open('test_set_softwareleverancier/2024-940.json') as json_file:
-    factuur_data = json.load(json_file)
+# Importeer de functie die je hebt geschreven om facturen te genereren
+from je_eerste_pdf import generate_invoices
 
-print(factuur_data['order']['orderdatum'])  # Print the loaded JSON data to inspect its structure
+# Pad naar de map met JSON-bestanden
+map_pad = 'test_set_softwareleverancier'
+aantal_pdf = len(os.listdir(map_pad))
+print(aantal_pdf)
+while aantal_pdf > 0:
+# Loop door alle bestanden in de map
+    for bestandsnaam in os.listdir(map_pad):
+        # Controleer of het bestand een JSON-bestand is
+        if bestandsnaam.endswith('.json'):
+            # Open het JSON-bestand en laad de gegevens
+            with open(os.path.join(map_pad, bestandsnaam)) as json_bestand:
+                factuur_data = json.load(json_bestand)
+            
+            # Genereer een unieke naam voor de factuur
+            factuur_naam = os.path.splitext(bestandsnaam)[0] + '_factuur.pdf'
+            # Genereer de factuur met de gegevens uit het JSON-bestand en sla deze op onder de unieke naam
+            generate_invoices(factuur_data, factuur_naam)
+    aantal_pdf -= 1

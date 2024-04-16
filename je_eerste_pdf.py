@@ -2,7 +2,7 @@ from fpdf import FPDF
 import json
 
 
-def generate_invoices(data):
+def generate_invoices(data, pdf_filename):
     pdf = FPDF('P', 'mm', 'A4')
 
 
@@ -99,7 +99,7 @@ def generate_invoices(data):
 
 
     total_bedrag = [
-        {'subtotal': 'subtotal'},
+        {'subtotal': '022'},
         {'BTW': '0'},
         {'total': '0'}
     ]
@@ -125,9 +125,11 @@ def generate_invoices(data):
             """ 
     pdf.multi_cell(0, 5, footer_text, 0, 'L')
 
-    pdf.output('Factuur_json1.pdf')
+    pdf.output(pdf_filename)
 
-with open('test_set_softwareleverancier/2024-391.json') as json_file:
+with open('test_set_softwareleverancier/2000-018.json') as json_file:
     factuur_data = json.load(json_file)
 
-generate_invoices(factuur_data)
+
+file_name = 'factuur_form_json1.pdf'
+generate_invoices(factuur_data, file_name)
