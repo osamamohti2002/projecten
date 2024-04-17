@@ -38,7 +38,7 @@ def generate_invoices(data, pdf_filename):
 
 
     # Infomatie over de klant
-    pdf.ln(40)
+    pdf.ln(5)
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
     pdf.set_font('Arial', '', 11)
@@ -46,8 +46,8 @@ def generate_invoices(data, pdf_filename):
     pdf.cell(120, 5, data["order"]["klant"]["adres"], ln=True)
     pdf.cell(120, 5, data["order"]["klant"]["postcode"], ln=True)
     pdf.cell(120, 5, data["order"]["klant"]["stad"], ln=True)
-    pdf.cell(120, 5, f"KVK-nummer: {data["order"]["klant"]["KVK-nummer"]}", ln=True)
-    pdf.cell(120, 5, f"Betaaltermijn {data["order"]["betaaltermijn"]}", ln=True)
+    pdf.cell(120, 5, f"KVK-nummer: {data['order']['klant']['KVK-nummer']}", ln=True)
+    pdf.cell(120, 5, f"Betaaltermijn {data['order']['betaaltermijn']}", ln=True)
 
 
     # Infomatie over de eigenaar
@@ -62,12 +62,6 @@ def generate_invoices(data, pdf_filename):
     pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
 
 
-    
-
-
-
-
-
 
     # ----------------------------------------------------------------
     pdf.ln(25)
@@ -76,21 +70,21 @@ def generate_invoices(data, pdf_filename):
     # Information about products
     pdf.set_font('Arial', '', 12)
     pdf.ln(10)
-    pdf.cell(50, 15, 'AANTAL', border=0)
-    pdf.cell(50, 15, 'OMSCHRIJVING', border=0)
-    pdf.cell(50, 15, 'PRIJS PER EENHEID', border=0)
+    pdf.cell(30, 15, 'AANTAL', border=0)
+    pdf.cell(60, 15, 'OMSCHRIJVING', border=0)
+    pdf.cell(60, 15, 'PRIJS PER EENHEID', border=0)
     pdf.cell(50, 15, 'REGELTOTAAL', border=0)
     pdf.ln(7)
 
     # Iterate over products
     for product in data["order"]["producten"]:
-        pdf.cell(50, 15, str(product["aantal"]), border=0)
-        pdf.cell(50, 15, product["productnaam"], border=0)
-        pdf.cell(50, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
+        pdf.cell(30, 15, str(product["aantal"]), border=0)
+        pdf.cell(60, 15, product["productnaam"], border=0)
+        pdf.cell(60, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
         pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
         pdf.ln(7)
 
-    pdf.ln(10)
+    pdf.ln(15)
 
     # Create table to check out
     # subtotal = sum(product["prijs_per_stuk_excl_btw"])
@@ -107,21 +101,21 @@ def generate_invoices(data, pdf_filename):
     pdf.set_font('Arial', '', 12)
     for data_row in total_bedrag:
         for datum, value in data_row.items():
-            pdf.cell(140, 3, str(datum), border=0, align='R')
-            pdf.cell(15, 3, str(value), border=0, ln=True, align='R')
+            pdf.cell(170, 3, str(datum), align='R')
+            pdf.cell(-165, 3, str(value), ln=True)
 
         pdf.ln()
 
     # Footer
     pdf.set_y(-15)
-    pdf.set_font('Arial', '', 12)
+    pdf.set_font('Arial', '', 10)
     footer_text = """
     U wordt verzocht het vermelde bedrag binnen 14 dagen over te maken op het onderstaande rekeningnummer.
     Het totaalbedrag dient binnen 14 dagen te worden voldaan.
     Bij achterstallige rekeningen wordt de wettelijk verschuldigde rente in rekening gebracht.
     NL04INGB0101712499 tav O Mothi
 
-                                Wij danken u voor uw vertrouwen in ons.
+                                                        Wij danken u voor uw vertrouwen in ons.
             """ 
     pdf.multi_cell(0, 5, footer_text, 0, 'L')
 
