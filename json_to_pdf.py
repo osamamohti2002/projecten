@@ -8,6 +8,7 @@ from je_eerste_pdf import generate_invoices
 map_pad = 'test_set_softwareleverancier'
 aantal_pdf = len(os.listdir(map_pad))
 print(aantal_pdf)
+
 while aantal_pdf > 0:
 # Loop door alle bestanden in de map
     for bestandsnaam in os.listdir(map_pad):
