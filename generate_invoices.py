@@ -119,7 +119,7 @@ def generate_invoices(data, pdf_filename):
 
     pdf.output(pdf_filename)
 
-with open('test_set_softwareleverancier/2000-018.json') as json_file:
+with open('JSON_IN/2024-978.json') as json_file:
     factuur_data = json.load(json_file)
 
 
