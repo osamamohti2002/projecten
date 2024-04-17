@@ -68,7 +68,7 @@ def generate_invoices(data, pdf_filename):
     pdf.set_fill_color(255, 255, 255)
 
     # Information about products
-    pdf.set_font('Arial', '', 12)
+    pdf.set_font('Arial', 'B', 12)
     pdf.ln(10)
     pdf.cell(30, 15, 'AANTAL', border=0)
     pdf.cell(60, 15, 'OMSCHRIJVING', border=0)
@@ -77,25 +77,26 @@ def generate_invoices(data, pdf_filename):
     pdf.ln(7)
 
     # Iterate over products
+    subtotal = 0
+    pdf.set_font('Arial', '', 12)
     for product in data["order"]["producten"]:
         pdf.cell(30, 15, str(product["aantal"]), border=0)
         pdf.cell(60, 15, product["productnaam"], border=0)
         pdf.cell(60, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
         pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
         pdf.ln(7)
-
+        subtotal += product["aantal"] * product["prijs_per_stuk_excl_btw"]
     pdf.ln(15)
 
-    # Create table to check out
-    # subtotal = sum(product["prijs_per_stuk_excl_btw"])
-    # btw = subtotal / 100 * 21
-    # total = (subtotal + btw)
+
+    btw = subtotal / 100 * 21
+    total = (subtotal + btw)
 
 
     total_bedrag = [
-        {'subtotal': '022'},
-        {'BTW': '0'},
-        {'total': '0'}
+        {'subtotal': round(float(subtotal), 2)},
+        {'BTW': round(float(btw), 2)},
+        {'total': round(float(total), 2)}
     ]
 
     pdf.set_font('Arial', '', 12)
@@ -121,7 +122,7 @@ def generate_invoices(data, pdf_filename):
 
     pdf.output(pdf_filename)
 
-with open('test_set_softwareleverancier/2000-018.json') as json_file:
+with open('test_set_softwareleverancier/2024-446.json') as json_file:
     factuur_data = json.load(json_file)
 
 
