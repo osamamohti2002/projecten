@@ -1,9 +1,12 @@
 import os
 import json
 
+<<<<<<< HEAD
 #kifak
 
 
+=======
+>>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
 # Importeer de functie die je hebt geschreven om facturen te genereren
 from je_eerste_pdf import generate_invoices
 
@@ -24,4 +27,8 @@ while aantal_pdf > 0:
             factuur_naam = os.path.splitext(bestandsnaam)[0] + '_factuur.pdf'
             # Genereer de factuur met de gegevens uit het JSON-bestand en sla deze op onder de unieke naam
             generate_invoices(factuur_data, factuur_naam)
+<<<<<<< HEAD
     aantal_pdf -= 1
+=======
+    aantal_pdf -= 1
+>>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
