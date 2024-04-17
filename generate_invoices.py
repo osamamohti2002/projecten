@@ -1,5 +1,6 @@
 from fpdf import FPDF
 import json
+from math import ceil
 
 
 def generate_invoices(data, pdf_filename):
@@ -38,7 +39,7 @@ def generate_invoices(data, pdf_filename):
 
 
     # Infomatie over de klant
-    pdf.ln(5)
+    pdf.ln(40)
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
     pdf.set_font('Arial', '', 11)
@@ -60,8 +61,6 @@ def generate_invoices(data, pdf_filename):
     pdf.cell(180, 135, '2651 TL, Berkel en Rodenrijd', ln=1, align='R')
     pdf.cell(180, -120, '0618383611', ln=1, align='R')
     pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
-
-
 
     # ----------------------------------------------------------------
     pdf.ln(25)
