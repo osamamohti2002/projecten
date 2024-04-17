@@ -1,8 +1,5 @@
 from fpdf import FPDF
-<<<<<<< HEAD
 from math import ceil
-=======
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
 import json
 
 
@@ -42,11 +39,7 @@ def generate_invoices(data, pdf_filename):
 
 
     # Infomatie over de klant
-<<<<<<< HEAD
     pdf.ln(40)
-=======
-    pdf.ln(5)
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
     pdf.set_font('Arial', '', 11)
@@ -70,15 +63,12 @@ def generate_invoices(data, pdf_filename):
     pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
 
 
-<<<<<<< HEAD
     
 
 
 
 
 
-=======
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
 
     # ----------------------------------------------------------------
     pdf.ln(25)
@@ -87,7 +77,6 @@ def generate_invoices(data, pdf_filename):
     # Information about products
     pdf.set_font('Arial', '', 12)
     pdf.ln(10)
-<<<<<<< HEAD
     pdf.cell(50, 15, 'AANTAL', border=0)
     pdf.cell(50, 15, 'OMSCHRIJVING', border=0)
     pdf.cell(50, 15, 'PRIJS PER EENHEID', border=0)
@@ -116,67 +105,26 @@ def generate_invoices(data, pdf_filename):
         {'subtotal': round(float(subtotal), 2)},
         {'BTW': round(float(btw), 2)},
         {'total': round(float(total), 2)}
-=======
-    pdf.cell(30, 15, 'AANTAL', border=0)
-    pdf.cell(60, 15, 'OMSCHRIJVING', border=0)
-    pdf.cell(60, 15, 'PRIJS PER EENHEID', border=0)
-    pdf.cell(50, 15, 'REGELTOTAAL', border=0)
-    pdf.ln(7)
-
-    # Iterate over products
-    for product in data["order"]["producten"]:
-        pdf.cell(30, 15, str(product["aantal"]), border=0)
-        pdf.cell(60, 15, product["productnaam"], border=0)
-        pdf.cell(60, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
-        pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
-        pdf.ln(7)
-
-    pdf.ln(15)
-
-    # Create table to check out
-    # subtotal = sum(product["prijs_per_stuk_excl_btw"])
-    # btw = subtotal / 100 * 21
-    # total = (subtotal + btw)
-
-
-    total_bedrag = [
-        {'subtotal': '022'},
-        {'BTW': '0'},
-        {'total': '0'}
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
     ]
 
     pdf.set_font('Arial', '', 12)
     for data_row in total_bedrag:
         for datum, value in data_row.items():
-<<<<<<< HEAD
             pdf.cell(140, 3, str(datum), border=0, align='R')
             pdf.cell(15, 3, str(value), border=0, ln=True, align='R')
-=======
-            pdf.cell(170, 3, str(datum), align='R')
-            pdf.cell(-165, 3, str(value), ln=True)
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
 
         pdf.ln()
 
     # Footer
     pdf.set_y(-15)
-<<<<<<< HEAD
     pdf.set_font('Arial', '', 12)
-=======
-    pdf.set_font('Arial', '', 10)
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
     footer_text = """
     U wordt verzocht het vermelde bedrag binnen 14 dagen over te maken op het onderstaande rekeningnummer.
     Het totaalbedrag dient binnen 14 dagen te worden voldaan.
     Bij achterstallige rekeningen wordt de wettelijk verschuldigde rente in rekening gebracht.
     NL04INGB0101712499 tav O Mothi
 
-<<<<<<< HEAD
                                 Wij danken u voor uw vertrouwen in ons.
-=======
-                                                        Wij danken u voor uw vertrouwen in ons.
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
             """ 
     pdf.multi_cell(0, 5, footer_text, 0, 'L')
 
@@ -187,8 +135,4 @@ with open('test_set_softwareleverancier/2000-018.json') as json_file:
 
 
 file_name = 'factuur_form_json1.pdf'
-<<<<<<< HEAD
 generate_invoices(factuur_data, file_name)
-=======
-generate_invoices(factuur_data, file_name)
->>>>>>> 0f4d4138c9e4df4c420221f38b27f04e4e04c9f1
