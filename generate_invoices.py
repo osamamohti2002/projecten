@@ -121,7 +121,7 @@ def generate_invoices(data, pdf_filename):
  
     pdf.output(pdf_filename)
  
-with open('/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_IN') as json_file:
+with open('C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_IN/2000-018.json') as json_file:
     factuur_data = json.load(json_file)
  
  
