@@ -1,6 +1,7 @@
 import os
 import json
 from generate_invoices import generate_invoices
+from db import *
 
 JSON_IN = 'JSON_IN'
 INVOICE = 'INVOICE'
@@ -60,3 +61,4 @@ for filename in os.listdir(JSON_IN):
             json.dump(data, output_file, indent=4)
 
         os.replace(file_path, project_file_path)
+        write_to_database(data)
