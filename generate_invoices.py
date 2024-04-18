@@ -28,14 +28,14 @@ def generate_invoices(data, pdf_filename):
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(0, 10, 'FACTUURNUMMER', ln=1, align='L')
     pdf.set_font('Arial', '', 11)
-    pdf.cell(0, 10, data["order"]["ordernummer"], ln=1, align='L')
+    pdf.cell(0, 10, data['order']['ordernummer'], ln=1, align='L')
     pdf.ln(-15)
  
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(80, 50, 'Datum', ln=True)
     pdf.ln(-40)
     pdf.set_font('Arial', '', 12)
-    pdf.cell(80, 50, data["order"]["orderdatum"], ln=True)
+    pdf.cell(80, 50, data['order']['orderdatum'], ln=True)
  
  
     # Infomatie over de klant
@@ -43,10 +43,10 @@ def generate_invoices(data, pdf_filename):
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(120, 10, 'FACTUUR AAN: ', ln=True)
     pdf.set_font('Arial', '', 11)
-    pdf.cell(120, 5, data["order"]["klant"]["naam"], ln=True)
-    pdf.cell(120, 5, data["order"]["klant"]["adres"], ln=True)
-    pdf.cell(120, 5, data["order"]["klant"]["postcode"], ln=True)
-    pdf.cell(120, 5, data["order"]["klant"]["stad"], ln=True)
+    pdf.cell(120, 5, data['order']['klant']['naam'], ln=True)
+    pdf.cell(120, 5, data['order']['klant']['adres'], ln=True)
+    pdf.cell(120, 5, data['order']['klant']['postcode'], ln=True)
+    pdf.cell(120, 5, data['order']['klant']['stad'], ln=True)
     pdf.cell(120, 5, f"KVK-nummer: {data['order']['klant']['KVK-nummer']}", ln=True)
     pdf.cell(120, 5, f"Betaaltermijn {data['order']['betaaltermijn']}", ln=True)
  
@@ -121,7 +121,7 @@ def generate_invoices(data, pdf_filename):
  
     pdf.output(pdf_filename)
  
-with open('C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_IN/2000-018.json') as json_file:
+with open('JSON_IN/2000-185.json') as json_file:
     factuur_data = json.load(json_file)
  
  
