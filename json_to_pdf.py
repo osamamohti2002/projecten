@@ -3,9 +3,9 @@ import json
 from generate_invoices import generate_invoices
 from db import *
 
-JSON_IN = 'JSON_IN'
-INVOICE = 'INVOICE'
-JSON_PROCESSED = 'JSON_PROCESSED'
+JSON_IN = 'C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_IN'
+INVOICE = 'C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/INVOICE'
+JSON_PROCESSED = 'C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_PROCESSED'
 
 eigenaar_gegevens = {
     'Bedrijfsnaam': 'OM Diensten',
