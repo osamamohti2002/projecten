@@ -2,7 +2,7 @@ import os
 import json
 
 # Importeer de functie die je hebt geschreven om facturen te genereren
-from je_eerste_pdf import generate_invoices
+from generate_invoices import generate_invoices
 
 # Pad naar de map met JSON-bestanden
 map_pad = 'test_set_softwareleverancier'
