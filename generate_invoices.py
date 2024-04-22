@@ -10,7 +10,6 @@ def generate_invoices(data, pdf_filename):
     # Add a page
     pdf.add_page()
  
- 
     # Aad achtergrond color
     pdf.set_fill_color(255, 255, 255)
     pdf.rect(0, 0, pdf.w, pdf.h / 2, 'F')
@@ -22,8 +21,11 @@ def generate_invoices(data, pdf_filename):
  
  
     pdf.set_font('Arial', 'B', 20)
-    pdf.cell(120, 10, 'FACTUUR', ln=True)
-    pdf.ln(10)
+    pdf.cell(120, 10, '>> | OM Diensten', ln=True)
+    pdf.set_draw_color(0, 0, 0)  # Zwarte kleur
+    pdf.set_line_width(0.5)  # Breedte van de lijn
+    pdf.line(pdf.get_x(), pdf.get_y(), pdf.get_x() + 120, pdf.get_y())  # Lijn van dezelfde breedte als de tekst
+    pdf.ln(10)  # Extra spatiëring na de lijn
  
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(0, 10, 'FACTUURNUMMER', ln=1, align='L')
@@ -52,7 +54,7 @@ def generate_invoices(data, pdf_filename):
  
  
     # Infomatie over de eigenaar
-    pdf.ln(-50)
+    pdf.ln(-45)
     pdf.set_font('Arial', 'B', 12)
     pdf.cell(180, -120, 'OM Diensten', ln=True, align='R')
     pdf.set_font('Arial', '', 11)
@@ -61,6 +63,7 @@ def generate_invoices(data, pdf_filename):
     pdf.cell(180, 135, '2651 TL, Berkel en Rodenrijd', ln=1, align='R')
     pdf.cell(180, -120, '0618383611', ln=1, align='R')
     pdf.cell(180, 135, 'Oosama.motee@gmail.com', ln=1, align='R')
+    pdf.cell(180, -120, 'KVK-nummer: 57689432', align='R')
  
  
  
@@ -83,7 +86,9 @@ def generate_invoices(data, pdf_filename):
         pdf.cell(30, 15, str(product["aantal"]), border=0)
         pdf.cell(60, 15, product["productnaam"], border=0)
         pdf.cell(60, 15, str(product["prijs_per_stuk_excl_btw"]), border=0)
-        pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
+        # pdf.cell(50, 15, str(product["aantal"] * product["prijs_per_stuk_excl_btw"]), border=0)
+        pdf.cell(50, 15, str(round(product["aantal"] * product["prijs_per_stuk_excl_btw"], 2)), border=0)
+
         pdf.ln(7)
         subtotal += product["aantal"] * product["prijs_per_stuk_excl_btw"]
     pdf.ln(15)
@@ -107,21 +112,17 @@ def generate_invoices(data, pdf_filename):
         pdf.ln()
  
     # Footer
-    pdf.set_y(-15)
+    pdf.set_y(260)
     pdf.set_font('Arial', '', 10)
     footer_text = """
     U wordt verzocht het vermelde bedrag binnen 14 dagen over te maken op het onderstaande rekeningnummer.
-    Het totaalbedrag dient binnen 14 dagen te worden voldaan.
-    Bij achterstallige rekeningen wordt de wettelijk verschuldigde rente in rekening gebracht.
-    NL04INGB0101712499 tav O Mothi
- 
                                                         Wij danken u voor uw vertrouwen in ons.
             """
     pdf.multi_cell(0, 5, footer_text, 0, 'L')
  
     pdf.output(pdf_filename)
  
-with open('JSON_IN/2000-018.json') as json_file:
+with open('C:/Users/lithe/OneDrive/school/how_to_make_money/projecten/JSON_IN/2000-474.json') as json_file:
     factuur_data = json.load(json_file)
  
  
